@@ -25,7 +25,7 @@ jobs:
             - name: print sha
               run: echo ${{ github.sha }}
             - name: Execute remote SSH commands using SSH key
-              uses: appleboy/ssh-action@master 
+              uses: appleboy/ssh-action@ssh-action@v1 
               with:
                 host: ${{ secrets.HOST }}
                 username: ${{ secrets.USERNAME }}
