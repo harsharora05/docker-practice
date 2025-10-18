@@ -21,7 +21,7 @@ jobs:
                 context: .
                 file: ./docker/dockerfile.backend
                 push: true
-                tags: harsharora17/harsharora17/my_backend:${{ github.sha }}
+                tags: harsharora17/my_backend:${{ github.sha }}
             - name: Execute remote SSH commands using SSH key
               uses: appleboy/ssh-action@v1
               with:
