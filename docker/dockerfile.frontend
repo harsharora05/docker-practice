@@ -1,0 +1,24 @@
+FROM node:20-alpine
+
+WORKDIR app/
+ARG DB_URL
+RUN npm install -g pnpm
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+COPY ./packages ./packages
+
+COPY ./apps/web ./apps/web
+
+RUN pnpm install
+RUN pnpm run db:generate
+# don't do migrations from docker files this can be risky
+
+# as we are using SSG in next so at build time it needs to talk to db so we need to pass db url
+RUN DB_URL=${DB_URL} pnpm run build:frontend
+
+EXPOSE 3000
+
+CMD ["pnpm","run","start:frontend"]
+
+

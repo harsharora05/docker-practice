@@ -1,0 +1,35 @@
+name : depoly backend to EC2
+on:
+    push:
+        branches:
+            - main
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: clone repo
+              uses: actions/checkout@v5
+            - name: Login to Docker Hub
+              uses: docker/login-action@v3
+              with:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Build and push Docker image
+              id: push
+              uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+              with:
+                context: .
+                file: ./docker/Dockerfile.backend
+                push: true
+                tags: harsharora17/harsharora17/my_backend:${{ github.sha }}
+            - name: Execute remote SSH commands using SSH key
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.KEY }}
+                port: ${{ secrets.PORT }}
+                script: |
+                    sudo docker stop harsharora17/my_backend && sudo docker run --name backend-server -e DATABASE_URL=${{secrets.DB_URL}}  -p 3001:3001 -d  harsharora17/my_backend:${{ github.sha }}
+
+
