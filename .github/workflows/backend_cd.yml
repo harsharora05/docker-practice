@@ -30,6 +30,6 @@ jobs:
                 key: ${{ secrets.KEY }}
                 port: ${{ secrets.PORT }}
                 script: |
-                    sudo docker stop harsharora17/my_backend && sudo docker run --name backend-server -e DATABASE_URL=${{secrets.DB_URL}}  -p 3001:3001 -d  harsharora17/my_backend:${{ github.sha }}
+                    sudo docker stop my_backend && sudo docker run -e DATABASE_URL=${{secrets.DB_URL}} --name  my_backend -p 3001:3001 -d  harsharora17/my_backend:${{ github.sha }}
 
 
