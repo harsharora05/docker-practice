@@ -39,7 +39,12 @@ jobs:
                 USER: ${{ secrets.USERNAME }}
                 SSHKEY: ${{ secrets.KEY }}
                 PORT: ${{ secrets.PORT }}
-            - run: echo hello
+            - run: | 
+                    sudo docker stop my_backend 
+                    sudo docker rm my_backend 
+                    sudo docker rmi -f harsharora17/my_backend 
+                    sudo docker pull harsharora17/my_backend:${{ github.sha }} 
+                    sudo docker run -e DATABASE_URL=${{secrets.DB_URL}} --name my_backend -p 3001:3001 -d harsharora17/my_backend:${{ github.sha }}
          
 
 
