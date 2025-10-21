@@ -31,6 +31,9 @@ jobs:
                 aws-security-group-id: ${{ secrets.AWS_SSH_SECURITY_GROUP_ID }}
                 protocol: 'tcp'
                 port: ${{ secrets.PORT }}
+                
+            - name: Wait for SG rule
+              run: sleep 20
           
             - name: Execute remote SSH commands using SSH key
               uses: appleboy/ssh-action@v1 
