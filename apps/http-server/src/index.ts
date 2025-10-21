@@ -12,7 +12,7 @@ app.get("/", async (req: Request, res: Response) => {
             password: Math.random().toString()
         }
     })
-    res.json({ "message": "chlo chlooo" })
+    res.json({ "message": "chlo chloooo" })
 });
 
 app.get("/users", async (req: Request, res: Response) => {
