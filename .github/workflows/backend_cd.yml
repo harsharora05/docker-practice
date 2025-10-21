@@ -31,15 +31,16 @@ jobs:
                 aws-security-group-id: ${{ secrets.AWS_SSH_SECURITY_GROUP_ID }}
                 protocol: 'tcp'
                 port: ${{ secrets.PORT }}
+                
 
             - name: Execute remote SSH commands using SSH key
-              uses: LuisEnMarroquin/setup-ssh-action@v3.0.0 
+              uses: appleboy/ssh-action@v1 
               with:
-                ORIGIN: ${{ secrets.HOST }}
-                USER: ${{ secrets.USERNAME }}
-                SSHKEY: ${{ secrets.KEY }}
-                PORT: ${{ secrets.PORT }}
-            - run: | 
+                host: 13.218.85.105
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.KEY }}
+                port: ${{ secrets.PORT }}
+                script: |
                     sudo docker stop my_backend 
                     sudo docker rm my_backend 
                     sudo docker rmi -f harsharora17/my_backend 
