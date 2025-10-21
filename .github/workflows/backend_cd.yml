@@ -39,8 +39,7 @@ jobs:
                 USER: ${{ secrets.USERNAME }}
                 SSHKEY: ${{ secrets.KEY }}
                 PORT: ${{ secrets.PORT }}
-                run: |
-                  echo hello
+            - run: echo hello
          
 
 
